@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
@@ -46,24 +45,23 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sum of Two Numbers</title>
+    <title>Grade Computation Tool</title>
     
     <!-- Include PyScript -->
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
     <script defer="" src="https://pyscript.net/latest/pyscript.js"></script>
 </head>
 <body>
-    <h1>Sum of Two Numbers</h1>
+    <h1>Grade Computation Tool</h1>
 
     <!-- Input fields for numbers -->
-    <label for="num1">Enter the first number:</label>
-    <input type="number" id="num1" step="any" /><br /><br />
+    <label for="grade">Enter your Prelim Grade:</label>
+    <input type="number" id="grade" step="any" /><br /><br />
     
-    <label for="num2">Enter the second number:</label>
-    <input type="number" id="num2" step="any" /><br /><br />
+
     
     <!-- Button to trigger sum calculation -->
-    <button id="calculate-btn">Calculate Sum</button>
+    <button id="calculate-btn">Click to Enter your Prelim Grade</button>
 
     <!-- Placeholder for the result -->
     <p id="result"></p>
@@ -74,14 +72,30 @@
 
         def calculate_sum(*args):
             # Retrieve the values from the input fields
-            num1 = float(Element("num1").element.value)
-            num2 = float(Element("num2").element.value)
-            
+            grade = float(Element("grade").element.value)
+            passing_grade = 75
+            weight_prelim = 0.20
+            weight_midterm = 0.30
+            weight_final = 0.50
+            dean_lister= 89
             # Calculate the sum
-            result = num1 + num2
+            #result = grade + passing_grade
             
             # Display the result
-            Element("result").element.innerHTML = f"The sum of the two numbers is: {result}"
+            if grade < 0 or grade > 100:
+                Element("result").element.innerHTML = f"Please Enter Number 0 to 100 only "
+                return result
+
+            prelim = passing_grade - grade * weight_prelim / (weight_midterm + weight_final)
+            midterm = ((weight_midterm + grade) - prelim) - weight_final
+            total_grade = prelim + midterm
+            if passing_grade <= total_grade:
+                if total_grade >= dean_lister :
+                    Element("result").element.innerHTML = f"You passed! Your grade is {total_grade}, and you are a Dean's Lister."
+                else:
+                    Element("result").element.innerHTML = f"You passed! Your grade is {total_grade}."
+            else:
+                Element("result").element.innerHTML = "You failed."
 
         # Bind the function to the button click event
         Element("calculate-btn").element.onclick = calculate_sum
