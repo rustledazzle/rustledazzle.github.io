@@ -95,7 +95,7 @@
                 else:
                     Element("result").element.innerHTML = f"You passed! Your grade is {total_grade}."
             else:
-                Element("result").element.innerHTML = "You failed."
+                Element("result").element.innerHTML = f"You failed. You must have atleast 75 and above. Your grade is {total_grade}"
 
         # Bind the function to the button click event
         Element("calculate-btn").element.onclick = calculate_sum
